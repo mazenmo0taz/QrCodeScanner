@@ -8,7 +8,9 @@
 import SwiftUI
 
 struct ScannerView: UIViewControllerRepresentable {
-    
+    @Binding var scannedCode: String
+    @Binding var alertItem:AlertItem?
+    @Binding var isScanning: Bool
     func makeUIViewController(context: Context) -> ScannerVC {
         ScannerVC(scannerDelegate: context.coordinator)
     }
@@ -16,16 +18,34 @@ struct ScannerView: UIViewControllerRepresentable {
     func updateUIViewController(_ uiViewController: ScannerVC, context: Context) {}
     
     func makeCoordinator() -> Coordinator {
-        Coordinator()
+        Coordinator(scannerView: self)
     }
     
     final class Coordinator: NSObject, ScannerVCDelegate {
+        var scannerView: ScannerView
+        init(scannerView: ScannerView) {
+            self.scannerView = scannerView
+        }
         func didScan(barcode: String) {
-            print(barcode)
+            scannerView.scannedCode = barcode
         }
         
         func didFindError(error: CameraError) {
-            print(error.rawValue)
+            switch error {
+            case .invalidCameraDevice:
+                scannerView.alertItem = AlertContent.invalidCameraDeviceAlert
+            case .failedToAddInputToSession:
+                scannerView.alertItem = AlertContent.failedToAddInputToSessionAlert
+            case .failedToAddOutputToSession:
+                scannerView.alertItem = AlertContent.failedToAddOutputToSessionAlert
+            case .failedToCreateDeviceInput:
+                scannerView.alertItem = AlertContent.failedToAddInputToSessionAlert
+            case .failedToReadCode:
+                scannerView.alertItem = AlertContent.failedToReadCodeAlert
+            case .failedToSetupPreviewLayer:
+                scannerView.alertItem = AlertContent.failedToSetupPreviewLayerAlert
+            }
+            scannerView.isScanning = false
         }
         
         
@@ -34,5 +54,5 @@ struct ScannerView: UIViewControllerRepresentable {
 }
 
 #Preview {
-    ScannerView()
+    ScannerView(scannedCode: .constant("12"), alertItem: .constant(AlertContent.failedToAddInputToSessionAlert),isScanning: .constant(false))
 }

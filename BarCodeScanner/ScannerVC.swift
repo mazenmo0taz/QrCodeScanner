@@ -7,21 +7,23 @@
 import UIKit
 import AVFoundation
 
-enum CameraError: String{
-    case invalidCameraDevice = "faild to find available camera"
-    case failedToCreateDeviceInput,failedToAddInputToSession = "Failed to add AVCaptureDeviceInput"
-    case failedToAddOutputToSession = "failed to add output to session "
-    case failedToReadCode = "Invalud code, failed to read code"
-    case failedToSetupPreviewLayer = "failed to set up preview layer"
+enum CameraError{
+    case invalidCameraDevice 
+    case failedToCreateDeviceInput,failedToAddInputToSession
+    case failedToAddOutputToSession
+    case failedToReadCode
+    case failedToSetupPreviewLayer
 }
+
 protocol ScannerVCDelegate: AnyObject {
     func didScan(barcode: String)
     func didFindError(error: CameraError)
 }
+
 final class ScannerVC: UIViewController{
     let captureSession = AVCaptureSession()
     var previewLayer:AVCaptureVideoPreviewLayer?
-    var scannerDelegate:ScannerVCDelegate?
+    weak var scannerDelegate:ScannerVCDelegate?
     
     init(scannerDelegate:ScannerVCDelegate){
         super.init(nibName: nil, bundle: nil)

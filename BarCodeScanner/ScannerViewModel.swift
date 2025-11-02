@@ -6,8 +6,10 @@
 //
 
 import SwiftUI
-class ScannerViewModel: ObservableObject {
-    @Published var isScanning: Bool = false
-    @Published var scannedCode: String?
-    @Published var alertItem: AlertItem
+
+@Observable
+class ScannerViewModel{
+    var scannedCode = ""
+    var alertItem:AlertItem?
+    var isScannning = true
 }
