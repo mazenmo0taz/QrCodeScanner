@@ -45,7 +45,7 @@ struct ScanningView: View {
         ZStack{
             ScannerView()
                 .padding(2)
-                .overlay(alignment:.top,content: {
+                .overlay(alignment:.top ,content: {
                     Rectangle()
                         .frame(height: 3)
                         .foregroundStyle(Color.blue)
