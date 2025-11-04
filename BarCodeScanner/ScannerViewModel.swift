@@ -12,4 +12,10 @@ class ScannerViewModel{
     var scannedCode = ""
     var alertItem:AlertItem?
     var isScannning = true
+    var textColor : Color{
+        scannedCode.isEmpty ? Color.secondary : Color.green
+    }
+    var ScannedCodeText : String{
+        scannedCode.isEmpty ? "No Code Found": scannedCode
+    }
 }
