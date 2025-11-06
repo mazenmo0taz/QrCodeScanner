@@ -8,7 +8,7 @@
 import SwiftUI
 
 @Observable
-class ScannerViewModel{
+class ScannerScreenViewModel{
     var scannedCode = ""
     var alertItem:AlertItem?
     var isScannning = true

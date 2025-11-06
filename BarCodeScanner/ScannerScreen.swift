@@ -7,7 +7,7 @@
 
 import SwiftUI
 struct ScannerScreen: View {
-    @State var scannerViewModel = ScannerViewModel()
+    @State var scannerViewModel = ScannerScreenViewModel()
     var body: some View {
         NavigationStack{
             VStack{
@@ -37,7 +37,7 @@ struct ScannerScreen: View {
 }
 
 struct CameraPreviewView: View {
-    @State var scannerViewModel:ScannerViewModel
+    @State var scannerViewModel:ScannerScreenViewModel
     var body: some View {
         ZStack {
             ScannerView(scannedCode: $scannerViewModel.scannedCode, alertItem: $scannerViewModel.alertItem, isScanning: $scannerViewModel.isScannning)

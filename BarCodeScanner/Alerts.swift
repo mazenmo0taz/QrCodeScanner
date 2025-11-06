@@ -20,3 +20,7 @@ struct AlertContent{
     static let failedToReadCodeAlert = AlertItem(title:"Invalud code", message: "Invalud code, failed to read code please try again we only accept QR codes/barcodes in this app", dismissButton: .default(Text("OK")))
     static  let failedToSetupPreviewLayerAlert =  AlertItem(title:"Failed to set up preview", message: "Failed to set up preview layer", dismissButton: .default(Text("OK")))
 }
+
+struct GenratorScreenAlertContent{
+    static let failedToGetOutputCIImageAlert = AlertItem(title: "failed to generate code", message: "failed To Get Output CIImage from input text please enter a valid text", dismissButton: .default(Text("OK")))
+}
