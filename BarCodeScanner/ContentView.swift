@@ -8,10 +8,23 @@
 import SwiftUI
 struct ContentView: View {
     var body: some View {
-        NavigationStack{
-            ScannerScreen()
-            .navigationTitle("Barcode Scanner")
-        }
+            TabView{
+                ScannerScreen()
+                    .tabItem {
+                        Label("Scan",systemImage: "qrcode.viewfinder")
+                    }
+                    .navigationTitle("Barcode Scanner")
+                
+                GeneratorScreen()
+                    .tabItem {
+                        Label("Generate",systemImage: "qrcode")
+                    }
+                    .navigationTitle("Barcode generator")
+            }
+            
+      
+        
+        
     }
        
 }

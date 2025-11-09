@@ -17,20 +17,32 @@ enum CodeType: String, CaseIterable {
 class GeneratorScreenViewModel{
     var textFieldText = "" {
         didSet {
-            generateCode()
+            if textFieldText.isEmpty {
+                return
+            }else {
+                generateCode()
+            }
         }
     }
     var codeType: CodeType = .qrcode{
         didSet {
-            generateCode()
+            if textFieldText.isEmpty {
+                return
+            }else {
+                generateCode()
+            }
+           
         }
     }
     let qrCodeFilter = CIFilter.qrCodeGenerator()
     let barCodeFilter = CIFilter.code128BarcodeGenerator()
     let context = CIContext()
-    var generatedImage: UIImage = UIImage(systemName: "xmark")!
+    var generatedImage: UIImage?
     var alertitem: AlertItem?
-    var showAlert = false
+    var isAlertPresented = false
+    var isSheetPresented = false
+    
+    
     func generateCode(){
         let data = Data(textFieldText.utf8)
         let outputCIImage:CIImage?
@@ -46,10 +58,29 @@ class GeneratorScreenViewModel{
         
         guard let outputCIImage = outputCIImage else{
             alertitem = GenratorScreenAlertContent.failedToGetOutputCIImageAlert
-            showAlert = true
+            isAlertPresented = true
             return
         }
         let cgImage = context.createCGImage(outputCIImage, from: outputCIImage.extent)!
         generatedImage = UIImage(cgImage: cgImage)
+    }
+    
+    func shareImage(){
+        if generatedImage != nil{
+            isSheetPresented = true
+        } else {
+            alertitem = GenratorScreenAlertContent.failedToShareImageAlert
+        }
+    }
+    
+    func saveImage(){
+        guard let image = generatedImage else{
+            alertitem = GenratorScreenAlertContent.failedToShareImageAlert
+            return
+        }
+        DispatchQueue.main.async {
+            UIImageWriteToSavedPhotosAlbum(image,nil,nil,nil)
+        }
+        alertitem = GenratorScreenAlertContent.imageSavedSuccessfullyAlert
     }
 }

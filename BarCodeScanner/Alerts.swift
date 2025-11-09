@@ -22,5 +22,7 @@ struct AlertContent{
 }
 
 struct GenratorScreenAlertContent{
-    static let failedToGetOutputCIImageAlert = AlertItem(title: "failed to generate code", message: "failed To Get Output CIImage from input text please enter a valid text", dismissButton: .default(Text("OK")))
+    static let failedToGetOutputCIImageAlert = AlertItem(title: "failed to generate code", message: "failed To Get Output Image from input text please enter a valid text", dismissButton: .default(Text("OK")))
+    static let failedToShareImageAlert = AlertItem(title: "failed to share image", message: "failed To Share/Save Image enter text first to generate code", dismissButton: .default(Text("OK")))
+    static let imageSavedSuccessfullyAlert = AlertItem(title: "your code has been saved to photos", message: "", dismissButton: .default(Text("OK")))
 }
