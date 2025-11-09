@@ -11,7 +11,6 @@ import SwiftUI
 class ScannerScreenViewModel{
     var scannedCode = ""
     var alertItem:AlertItem?
-    var isScannning = true
     var textColor : Color{
         scannedCode.isEmpty ? Color.secondary : Color.green
     }

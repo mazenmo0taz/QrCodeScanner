@@ -13,13 +13,12 @@ struct ContentView: View {
                     .tabItem {
                         Label("Scan",systemImage: "qrcode.viewfinder")
                     }
-                    .navigationTitle("Barcode Scanner")
+                   
                 
                 GeneratorScreen()
                     .tabItem {
                         Label("Generate",systemImage: "qrcode")
                     }
-                    .navigationTitle("Barcode generator")
             }
             
       

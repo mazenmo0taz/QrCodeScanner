@@ -10,7 +10,6 @@ import SwiftUI
 struct ScannerView: UIViewControllerRepresentable {
     @Binding var scannedCode: String
     @Binding var alertItem:AlertItem?
-    @Binding var isScanning: Bool
     func makeUIViewController(context: Context) -> ScannerVC {
         ScannerVC(scannerDelegate: context.coordinator)
     }
@@ -45,7 +44,6 @@ struct ScannerView: UIViewControllerRepresentable {
             case .failedToSetupPreviewLayer:
                 scannerView.alertItem = AlertContent.failedToSetupPreviewLayerAlert
             }
-            scannerView.isScanning = false
         }
         
         
@@ -54,5 +52,5 @@ struct ScannerView: UIViewControllerRepresentable {
 }
 
 #Preview {
-    ScannerView(scannedCode: .constant("12"), alertItem: .constant(AlertContent.failedToAddInputToSessionAlert),isScanning: .constant(false))
+    ScannerView(scannedCode: .constant("12"), alertItem: .constant(AlertContent.failedToAddInputToSessionAlert))
 }

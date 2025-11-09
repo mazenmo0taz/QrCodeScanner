@@ -68,10 +68,6 @@ struct GeneratorScreen: View {
     }
 }
 
-#Preview {
-    GeneratorScreen()
-}
-
 struct CustomButtonView: View {
     var text: String
     var imageName: String
@@ -93,3 +89,8 @@ struct CustomButtonView: View {
         .padding(25)
     }
 }
+#Preview {
+    GeneratorScreen()
+}
+
+

@@ -19,6 +19,7 @@ struct ScannerScreen: View {
                     .foregroundStyle(.secondary)
                 
                 CameraPreviewView(scannerViewModel: scannerViewModel)
+                   
                 
                 Label("Scanned Code:",systemImage: "barcode.viewfinder")
                     .font(.system(.title,design: .rounded))
@@ -38,31 +39,45 @@ struct ScannerScreen: View {
 
 struct CameraPreviewView: View {
     @State var scannerViewModel:ScannerScreenViewModel
+    @State private var animateLine = false
     var body: some View {
-        ZStack {
-            ScannerView(scannedCode: $scannerViewModel.scannedCode, alertItem: $scannerViewModel.alertItem, isScanning: $scannerViewModel.isScannning)
-                .padding(2)
-                .overlay(alignment:.top ,content: {
-                    Rectangle()
-                        .frame(height: 3)
-                        .foregroundStyle(Color.blue)
-                        .shadow(color: Color.black.opacity(0.8), radius: 8, y:8)
-                        .animation(.easeInOut(duration: 1).repeatForever(autoreverses: true),value: scannerViewModel.isScannning)
-                        .offset(y: scannerViewModel.isScannning ? 345 : 0)
-                })
-                .padding()
-            ForEach(0...1, id: \.self) { index in
-                RoundedRectangle(cornerRadius: 5,style: .circular)
-                    .trim(from:0.6,to:0.64)
-                    .stroke(Color.blue,style: StrokeStyle(lineWidth: 7))
-                    .rotationEffect(Angle(degrees: Double(index*180)))
-                RoundedRectangle(cornerRadius: 5,style: .circular)
-                    .trim(from:0.86,to:0.9)
-                    .stroke(Color.blue,style: StrokeStyle(lineWidth: 7))
-                    .rotationEffect(Angle(degrees: Double(index*180)))
+         ZStack {
+             
+                ScannerView(scannedCode: $scannerViewModel.scannedCode, alertItem: $scannerViewModel.alertItem)
+                    .padding(5)
+             
+                ForEach(0...1, id: \.self) { index in
+                    RoundedRectangle(cornerRadius: 5)
+                        .trim(from:0.85,to:0.9)
+                        .stroke(Color.green,style: StrokeStyle(lineWidth: 4))
+                        .rotationEffect(Angle(degrees: Double(index*180)))
+                        RoundedRectangle(cornerRadius: 5)
+                            .trim(from:0.1,to:0.15)
+                            .stroke(Color.blue,style: StrokeStyle(lineWidth: 4))
+                            .rotationEffect(Angle(degrees: Double(index) * 180 ))
+                }
+             Rectangle()
+                 .fill(.blue.gradient)
+                 .frame(height: 2)
+                 .offset(y: animateLine ? 170 : -170)
+                 .shadow(radius: 3, x: 0, y: 10)
+                 .animation(
+                    Animation.linear(duration: 1)
+                         .repeatForever(autoreverses: true),
+                    value: animateLine
+                 )
+                 .onAppear {
+                     animateLine = true
+                 }
+                 .padding(5)
             }
-        }
-        .padding(3)
-        .frame(maxWidth: .infinity, maxHeight: 370)
+            .padding()
+            .frame(maxWidth: .infinity, maxHeight: 400)
+            .clipped()
     }
+    
+}
+
+#Preview {
+    ScannerScreen()
 }
