@@ -25,3 +25,11 @@ This project is built using the MVVM (Model-View-ViewModel) design pattern. This
  * Platform: iOS 18
 
 > Note: To test scanning, you will need to run the app on a physical iPhone or iPad, as the simulator does not have a camera and you will see an alert saying this in the application.
+
+
+![IMG_1607](https://github.com/user-attachments/assets/d0d30260-90f4-48f3-aaff-c25e01404240)
+![IMG_1608](https://github.com/user-attachments/assets/be4a341e-9585-45ed-b98e-f22de0e54b07)
+![IMG_1609](https://github.com/user-attachments/assets/df130970-08dd-48fa-8b63-8bf18cf11edd)
+![IMG_1612](https://github.com/user-attachments/assets/3000f89a-1422-4fea-a107-9e8864b19a5d)
+![IMG_1611](https://github.com/user-attachments/assets/1c6b4c9c-01b7-4aab-ad50-dd121447d040)
+![IMG_1614](https://github.com/user-attachments/assets/9dc95563-f8c3-4e7b-8ef0-b10383920cab)
