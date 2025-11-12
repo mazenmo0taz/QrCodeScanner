@@ -17,7 +17,7 @@ struct AlertContent{
     static let invalidCameraDeviceAlert = AlertItem(title: "camera not available", message: "faild to find available camera", dismissButton: .default(Text("OK")))
     static let failedToAddInputToSessionAlert = AlertItem(title: "failed to create device input", message: "Failed to add AVCaptureDeviceInput", dismissButton: .default(Text("OK")))
     static  let failedToAddOutputToSessionAlert =  AlertItem(title: "failed to add device output", message: "Failed to add output to the session", dismissButton: .default(Text("OK")))
-    static let failedToReadCodeAlert = AlertItem(title:"Invalud code", message: "Invalud code, failed to read code please try again we only accept QR codes/barcodes in this app", dismissButton: .default(Text("OK")))
+    static let failedToReadCodeAlert = AlertItem(title:"Invalid code", message: "Invalid code, failed to read code please try again we only accept QR codes/barcodes in this app", dismissButton: .default(Text("OK")))
     static  let failedToSetupPreviewLayerAlert =  AlertItem(title:"Failed to set up preview", message: "Failed to set up preview layer", dismissButton: .default(Text("OK")))
 }
 
@@ -25,4 +25,5 @@ struct GenratorScreenAlertContent{
     static let failedToGetOutputCIImageAlert = AlertItem(title: "failed to generate code", message: "failed To Get Output Image from input text please enter a valid text", dismissButton: .default(Text("OK")))
     static let failedToShareImageAlert = AlertItem(title: "failed to share image", message: "failed To Share/Save Image enter text first to generate code", dismissButton: .default(Text("OK")))
     static let imageSavedSuccessfullyAlert = AlertItem(title: "your code has been saved to photos", message: "", dismissButton: .default(Text("OK")))
+    static let photoAccessDeniedAlert = AlertItem(title: "Photos library access denied", message: "please allow access to photos library in settings", dismissButton: .default(Text("OK")))
 }

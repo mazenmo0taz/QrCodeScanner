@@ -17,4 +17,5 @@ class ScannerScreenViewModel{
     var ScannedCodeText : String{
         scannedCode.isEmpty ? "No Code Found": scannedCode
     }
+    
 }

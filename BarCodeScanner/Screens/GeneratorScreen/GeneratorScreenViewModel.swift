@@ -7,7 +7,7 @@
 
 import SwiftUI
 import CoreImage.CIFilterBuiltins
-
+import Photos
 enum CodeType: String, CaseIterable {
     case qrcode =  "Qr code"
     case barcode = "Bar code"
@@ -39,7 +39,6 @@ class GeneratorScreenViewModel{
     let context = CIContext()
     var generatedImage: UIImage?
     var alertitem: AlertItem?
-    var isAlertPresented = false
     var isSheetPresented = false
     
     
@@ -58,10 +57,10 @@ class GeneratorScreenViewModel{
         
         guard let outputCIImage = outputCIImage else{
             alertitem = GenratorScreenAlertContent.failedToGetOutputCIImageAlert
-            isAlertPresented = true
             return
         }
-        let cgImage = context.createCGImage(outputCIImage, from: outputCIImage.extent)!
+        let scalledImage = outputCIImage.transformed(by: CGAffineTransform(scaleX: codeType == .barcode ? 5 : 10, y: codeType == .barcode ? 5 : 10))
+        let cgImage = context.createCGImage(scalledImage, from: scalledImage.extent)!
         generatedImage = UIImage(cgImage: cgImage)
     }
     
@@ -73,6 +72,32 @@ class GeneratorScreenViewModel{
         }
     }
     
+    func checkPhotosLibraryAuthorizationStatusAndSave(){
+        PHPhotoLibrary.requestAuthorization { status in
+            switch status {
+            case .authorized, .limited:
+                self.saveImage()
+            case .denied, .restricted:
+                if self.generatedImage == nil {
+                    self.alertitem = GenratorScreenAlertContent.failedToShareImageAlert
+                }else {
+                    self.alertitem = GenratorScreenAlertContent.photoAccessDeniedAlert
+                }
+            case .notDetermined:
+                PHPhotoLibrary.requestAuthorization(for: .addOnly) { status in
+                    if status == .authorized || status == .limited {
+                        self.saveImage()
+                        self.alertitem = GenratorScreenAlertContent.imageSavedSuccessfullyAlert
+                    } else {
+                        self.alertitem = GenratorScreenAlertContent.photoAccessDeniedAlert
+                    }
+                }
+            @unknown default:
+                break
+            }
+        }
+    }
+    
     func saveImage(){
         guard let image = generatedImage else{
             alertitem = GenratorScreenAlertContent.failedToShareImageAlert
@@ -81,6 +106,6 @@ class GeneratorScreenViewModel{
         DispatchQueue.main.async {
             UIImageWriteToSavedPhotosAlbum(image,nil,nil,nil)
         }
-        alertitem = GenratorScreenAlertContent.imageSavedSuccessfullyAlert
+        self.alertitem = GenratorScreenAlertContent.imageSavedSuccessfullyAlert
     }
 }

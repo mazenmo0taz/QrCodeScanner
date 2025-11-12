@@ -27,6 +27,7 @@ struct ScannerScreen: View {
                 Text(scannerViewModel.ScannedCodeText)
                     .font(.system(.largeTitle,design: .rounded,weight: .semibold))
                     .foregroundStyle(scannerViewModel.textColor)
+                    .lineLimit(3)
                     .padding(8)
             }
             .navigationTitle("Barcode Scanner")
@@ -42,8 +43,7 @@ struct CameraPreviewView: View {
     @State private var animateLine = false
     var body: some View {
          ZStack {
-             
-                ScannerView(scannedCode: $scannerViewModel.scannedCode, alertItem: $scannerViewModel.alertItem)
+             ScannerView(scannedCode: $scannerViewModel.scannedCode, alertItem: $scannerViewModel.alertItem)
                     .padding(5)
              
                 ForEach(0...1, id: \.self) { index in

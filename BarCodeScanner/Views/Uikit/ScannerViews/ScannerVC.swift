@@ -16,7 +16,7 @@ enum CameraError{
 }
 
 protocol ScannerVCDelegate: AnyObject {
-    func didScan(barcode: String)
+    func didScan(code: String)
     func didFindError(error: CameraError)
 }
 
@@ -69,7 +69,7 @@ final class ScannerVC: UIViewController{
         if captureSession.canAddOutput(output){
             captureSession.addOutput(output)
             output.setMetadataObjectsDelegate(self, queue: .main)
-            output.metadataObjectTypes = [.qr,.ean8,.ean13]
+            output.metadataObjectTypes = [.qr,.ean8,.ean13,.code128,.code39,.codabar,.code93,.pdf417,.code39Mod43]
         }else{
             scannerDelegate?.didFindError(error: .failedToAddOutputToSession)
         }
@@ -84,7 +84,7 @@ final class ScannerVC: UIViewController{
 extension ScannerVC: AVCaptureMetadataOutputObjectsDelegate{
     func metadataOutput(_ output: AVCaptureMetadataOutput, didOutput metadataObjects: [AVMetadataObject], from connection: AVCaptureConnection) {
         guard let metaDataObject = metadataObjects.first as? AVMetadataMachineReadableCodeObject else {
-            scannerDelegate?.didFindError(error: .failedToReadCode)
+            //scannerDelegate?.didFindError(error: .failedToReadCode)
             return
         }
         
@@ -92,6 +92,6 @@ extension ScannerVC: AVCaptureMetadataOutputObjectsDelegate{
             scannerDelegate?.didFindError(error: .failedToReadCode)
             return
         }
-        scannerDelegate?.didScan(barcode: foundCode)
+        scannerDelegate?.didScan(code: foundCode)
     }
 }

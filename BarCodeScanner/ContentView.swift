@@ -14,18 +14,12 @@ struct ContentView: View {
                         Label("Scan",systemImage: "qrcode.viewfinder")
                     }
                    
-                
                 GeneratorScreen()
                     .tabItem {
                         Label("Generate",systemImage: "qrcode")
                     }
             }
-            
-      
-        
-        
     }
-       
 }
 
 #Preview {

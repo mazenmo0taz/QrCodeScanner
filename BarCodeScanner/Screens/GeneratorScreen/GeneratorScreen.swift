@@ -34,12 +34,12 @@ struct GeneratorScreen: View {
                 Image(uiImage: (viewModel.generatedImage ?? UIImage(systemName: "xmark"))!)
                     .resizable()
                     .interpolation(.none)
-                    .frame(width: 350, height: .infinity)
-                    .aspectRatio(contentMode: .fill)
-                    .padding(.vertical,20)
+                    .aspectRatio(contentMode: .fit)
+                    .frame(maxWidth: 350, maxHeight: .infinity)
+                    .padding(20)
             }else{
                 RoundedRectangle(cornerRadius: 20)
-                    .frame(width: 350, height: .infinity)
+                    .frame(maxWidth: 350, maxHeight: .infinity)
                     .foregroundStyle(Color.gray.opacity(0.4))
                     .padding(.vertical,20)
             }
@@ -51,7 +51,7 @@ struct GeneratorScreen: View {
                     CustomButtonView(text: "Share", imageName: "square.and.arrow.up",color: .cyan)
                 }
                 Button{
-                    viewModel.saveImage()
+                    viewModel.checkPhotosLibraryAuthorizationStatusAndSave()
                 } label: {
                    CustomButtonView(text: "Save", imageName: "square.and.arrow.down")
                 }

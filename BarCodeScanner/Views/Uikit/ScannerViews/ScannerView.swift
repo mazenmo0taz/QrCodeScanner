@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct ScannerView: UIViewControllerRepresentable {
+    @Environment(\.openURL) var openURL
     @Binding var scannedCode: String
     @Binding var alertItem:AlertItem?
     func makeUIViewController(context: Context) -> ScannerVC {
@@ -25,8 +26,12 @@ struct ScannerView: UIViewControllerRepresentable {
         init(scannerView: ScannerView) {
             self.scannerView = scannerView
         }
-        func didScan(barcode: String) {
-            scannerView.scannedCode = barcode
+        func didScan(code: String) {
+            scannerView.scannedCode = code
+            if code.contains("http") {
+                if let url = URL(string: code) {
+                    scannerView.openURL(url)
+                }}
         }
         
         func didFindError(error: CameraError) {
@@ -51,6 +56,3 @@ struct ScannerView: UIViewControllerRepresentable {
     
 }
 
-#Preview {
-    ScannerView(scannedCode: .constant("12"), alertItem: .constant(AlertContent.failedToAddInputToSessionAlert))
-}
