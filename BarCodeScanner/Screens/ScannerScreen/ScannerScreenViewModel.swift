@@ -11,11 +11,11 @@ import SwiftUI
 class ScannerScreenViewModel{
     var scannedCode = ""
     var alertItem:AlertItem?
+    var isShowingConfirmationDialog: Bool = false
     var textColor : Color{
         scannedCode.isEmpty ? Color.secondary : Color.green
     }
     var ScannedCodeText : String{
         scannedCode.isEmpty ? "No Code Found": scannedCode
     }
-    
 }

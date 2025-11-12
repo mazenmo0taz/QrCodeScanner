@@ -8,9 +8,9 @@
 import SwiftUI
 
 struct ScannerView: UIViewControllerRepresentable {
-    @Environment(\.openURL) var openURL
     @Binding var scannedCode: String
     @Binding var alertItem:AlertItem?
+    @Binding var isShowingConfirmationDialog: Bool
     func makeUIViewController(context: Context) -> ScannerVC {
         ScannerVC(scannerDelegate: context.coordinator)
     }
@@ -26,12 +26,12 @@ struct ScannerView: UIViewControllerRepresentable {
         init(scannerView: ScannerView) {
             self.scannerView = scannerView
         }
+        
         func didScan(code: String) {
             scannerView.scannedCode = code
-            if code.contains("http") {
-                if let url = URL(string: code) {
-                    scannerView.openURL(url)
-                }}
+            if code.hasPrefix("http") {
+                scannerView.isShowingConfirmationDialog = true
+            }
         }
         
         func didFindError(error: CameraError) {

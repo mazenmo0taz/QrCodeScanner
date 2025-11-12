@@ -8,6 +8,7 @@
 import SwiftUI
 struct ScannerScreen: View {
     @State var scannerViewModel = ScannerScreenViewModel()
+    @Environment(\.openURL) var openURL
     var body: some View {
         NavigationStack{
             VStack{
@@ -31,51 +32,21 @@ struct ScannerScreen: View {
                     .padding(8)
             }
             .navigationTitle("Barcode Scanner")
+            .confirmationDialog("Open this link?", isPresented: $scannerViewModel.isShowingConfirmationDialog, titleVisibility: .visible){
+                    Button("Open") {
+                        openURL(URL(string:scannerViewModel.ScannedCodeText)!)
+                    }
+                
+                Button("Cancel", role: .cancel) { }
+            } message: {
+                Text(scannerViewModel.scannedCode)
+            }
+            
             .alert(item: $scannerViewModel.alertItem) { item in
                     Alert(title: Text(item.title), message: Text(item.message), dismissButton: item.dismissButton)
-                }
+            }
         }
     }
-}
-
-struct CameraPreviewView: View {
-    @State var scannerViewModel:ScannerScreenViewModel
-    @State private var animateLine = false
-    var body: some View {
-         ZStack {
-             ScannerView(scannedCode: $scannerViewModel.scannedCode, alertItem: $scannerViewModel.alertItem)
-                    .padding(5)
-             
-                ForEach(0...1, id: \.self) { index in
-                    RoundedRectangle(cornerRadius: 5)
-                        .trim(from:0.85,to:0.9)
-                        .stroke(Color.green,style: StrokeStyle(lineWidth: 4))
-                        .rotationEffect(Angle(degrees: Double(index*180)))
-                        RoundedRectangle(cornerRadius: 5)
-                            .trim(from:0.1,to:0.15)
-                            .stroke(Color.blue,style: StrokeStyle(lineWidth: 4))
-                            .rotationEffect(Angle(degrees: Double(index) * 180 ))
-                }
-             Rectangle()
-                 .fill(.blue.gradient)
-                 .frame(height: 2)
-                 .offset(y: animateLine ? 170 : -170)
-                 .shadow(radius: 3, x: 0, y: 10)
-                 .animation(
-                    Animation.linear(duration: 1)
-                         .repeatForever(autoreverses: true),
-                    value: animateLine
-                 )
-                 .onAppear {
-                     animateLine = true
-                 }
-                 .padding(5)
-            }
-            .padding()
-            .frame(maxWidth: .infinity, maxHeight: 400)
-            .clipped()
-    }
-    
 }
 
 #Preview {
